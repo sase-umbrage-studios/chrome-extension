@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>get-access-token</title>
+</head>
+<body>
+  <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
+  <script>
+    function handleError(error) {
+      window.parent.postMessage(
+        JSON.stringify({
+          type: 'sase-chrome-error-message',
+          error: error,
+          from: 'sase-chrome-get-access-token-html'
+        }),
+        '*'
+      );
+    }
+
+    auth0.createAuth0Client({
+      domain: 'dev-aqery6lj0pr7n2li.us.auth0.com',
+      clientId: 'SgjZjsplCJaP2eTsiBhIhcNJvlMqBmcW'
+    })
+    .then((auth0Client) => {
+      auth0Client.getTokenSilently({
+        authorizationParams: { redirect_uri: window.location.origin }
+      })
+      .then((accessToken) => {
+        window.parent.postMessage(
+          JSON.stringify({
+            type: 'sase-chrome-id-token',
+            accessToken: accessToken,
+            from: 'sase-chrome-get-access-token-html'
+          }),
+          '*'
+        );
+      })
+      .catch(handleError);
+    })
+    .catch(handleError);
+  </script>
+</body>
+</html>

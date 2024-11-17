@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="frame-src 'self' challenges.cloudflare.com https://*.sharepoint.com https://content.googleapis.com https://docs.google.com https://onedrive.live.com https://tcr9i.chat.openai.com https://tcr9i.chatgpt.com/ js.stripe.com player.vimeo.com www.youtube.com https://dev-aqery6lj0pr7n2li.us.auth0.com;">
+  <title>logout</title>
+</head>
+<body>
+  <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
+  <script>
+    function handleError(error) {
+      console.log(`[Server]: Error logging out - ${error}`);
+      window.parent.postMessage(
+        JSON.stringify({
+          type: 'sase-chrome-error-message',
+          error: error,
+          from: 'sase-chrome-logout-html'
+        }),
+        '*'
+      );
+    }
+
+    auth0.createAuth0Client({
+      domain: 'dev-aqery6lj0pr7n2li.us.auth0.com',
+      clientId: 'SgjZjsplCJaP2eTsiBhIhcNJvlMqBmcW'
+    })
+    .then((auth0Client) => {
+      auth0Client.logout({
+        returnTo: window.location.origin,
+      })
+      .then(() => {
+        window.parent.postMessage(
+          JSON.stringify({
+            type: 'sase-chrome-logout',
+            from: 'sase-chrome-logout-html'
+          }),
+          '*'
+        );
+      })
+      .catch(handleError)
+    })
+    .catch(handleError);
+  </script>
+</body>
+</html>
