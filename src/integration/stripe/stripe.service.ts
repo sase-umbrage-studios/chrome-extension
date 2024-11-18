@@ -4,6 +4,8 @@ import { StripeSessionRepository } from './stripe.repository.js';
 
 dotenv.config();
 
+const BACKEND_HOST = process.env.BACKEND_HOST;
+
 export class StripeService {
   stripeSessionRepository: StripeSessionRepository;
   stripe: Stripe;
@@ -23,15 +25,15 @@ export class StripeService {
           price_data: {
             currency: 'usd',
             product_data: {
-              name: '50 Credits'
+              name: '125 Credits'
             },
-            unit_amount: 500
+            unit_amount: 699
           },
           quantity: 1
         }
       ],
-      success_url: `http://localhost:3000/api/payment/complete-payment?user_id=${userId}`,
-      cancel_url: `http://localhost:3000/api/payment/cancel-payment?user_id=${userId}`,
+      success_url: `${BACKEND_HOST}/api/payment/complete-payment?user_id=${userId}`,
+      cancel_url: `${BACKEND_HOST}/api/payment/cancel-payment?user_id=${userId}`,
     });
 
     try {

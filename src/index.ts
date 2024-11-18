@@ -32,13 +32,17 @@ mongoose.connect(`mongodb+srv://${dbUsername}:${dbPassword}@chrome-extension.w0m
 .catch((error) => console.error(`[Server]: Error connecting to database - ${error}`));
 
 // Controllers
-new QueryController(app);
+new QueryController(app, authenticateUserMiddleware);
 new UserController(app, authenticateUserMiddleware);
 new PaymentController(app, authenticateUserMiddleware);
 
 // Redirect
 app.get('/', (_, res) => {
   res.send('[Server]: Redirect successful.');
+});
+
+app.get('/stripe-proof', (_, res) => {
+  res.send('SASE CHROME EXTENSION');
 });
 
 // Authentification / Login

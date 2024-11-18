@@ -34,6 +34,7 @@ export class OpenAiService {
         }
       ]
     });
+    console.log(`[Server]: OpenAI Response - \n${JSON.stringify(result, null, 2)}`);
     return result?.choices?.[0]?.message?.content ?? 'No response found.';
   }
 }
