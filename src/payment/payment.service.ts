@@ -20,7 +20,7 @@ export class PaymentService {
     await this.stripeService.stripeSessionRepository.deleteOneBySessionId(session.id);
     const user = await this.userService.userRepository.findOneById(userId);
     if (!user) throw 'Cannot find user';
-    await this.userService.userRepository.updateOneById(userId, { credits: user.credits + 50 });
+    await this.userService.userRepository.updateOneById(userId, { credits: user.credits + 125 });
     return stripeSession.redirectUrl;
   }
 
