@@ -8,6 +8,7 @@ export class UserRepository {
   constructor() {
     this.findOneById=this.findOneById.bind(this);
     this.createOne=this.createOne.bind(this);
+    this.updateOneById=this.updateOneById.bind(this);
     this.UserModel = UserModel;
     this.initialCredits = 2;
   }
@@ -27,5 +28,9 @@ export class UserRepository {
     await user.save();
     const constructedUser: IUser = { id, credits: 2 };
     return constructedUser;
+  }
+
+  async updateOneById(id: string, updates: {[k:string]: unknown}) {
+    return await this.UserModel.updateOne({ id }, updates);
   }
 }

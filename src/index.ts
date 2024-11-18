@@ -6,6 +6,7 @@ import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { QueryController } from './query/query.controller.js';
 import { UserController } from './user/user.controller.js';
+import { PaymentController } from './payment/payment.controller.js';
 import { authenticateUserMiddleware } from './middleware/authenticate-user.middleware.js';
 
 dotenv.config();
@@ -33,6 +34,7 @@ mongoose.connect(`mongodb+srv://${dbUsername}:${dbPassword}@chrome-extension.w0m
 // Controllers
 new QueryController(app);
 new UserController(app, authenticateUserMiddleware);
+new PaymentController(app, authenticateUserMiddleware);
 
 // Redirect
 app.get('/', (_, res) => {
