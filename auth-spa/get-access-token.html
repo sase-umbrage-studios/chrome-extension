@@ -25,13 +25,15 @@
     })
     .then((auth0Client) => {
       auth0Client.getTokenSilently({
-        authorizationParams: { redirect_uri: window.location.origin }
+        authorizationParams: { redirect_uri: window.location.origin },
+        scope: 'openid profile email',
+        detailedResponse: true,
       })
       .then((accessToken) => {
         window.parent.postMessage(
           JSON.stringify({
             type: 'sase-chrome-id-token',
-            accessToken: accessToken,
+            accessToken: accessToken.id_token,
             from: 'sase-chrome-get-access-token-html'
           }),
           '*'
